@@ -1,19 +1,22 @@
-﻿using System;
+﻿using Data;
+using System;
 using System.Diagnostics;
 using System.Threading;
 
 namespace Task
 {
-    static class F1
+    static class T1
     {
         public static void Func1(int N)
         {
+            MathFucn mF = new MathFucn();
+            FillParam fP = new FillParam();
+            PrintText pT = new PrintText();
+
             // таймер часу
             Stopwatch stopwatch = new Stopwatch();
             // запуст таймера часу
             stopwatch.Start();
-
-            //Thread.Sleep(1000);
 
             // створення локальних змінних
             int[] E = new int[N];
@@ -25,29 +28,56 @@ namespace Task
             int[,] MD = new int[N,N];
 
             // якщо N менше рівне 4, вводимо з клавіатури
+            Console.Write("T1. Input num: ");
             if (N <= 4)
             {
-                Console.WriteLine("Func1. Input num for fill: ");
                 int num = int.Parse(Console.ReadLine());
 
-                Data.FillParam.FillFunc1(N, num, A, B, C, D, MA, MD);
+                fP.FillVect(N, num, E);
+                Console.Write("T1. Input num: ");
+                num = int.Parse(Console.ReadLine());
+                fP.FillVect(N, num, A);
+                Console.Write("T1. Input num: ");
+                num = int.Parse(Console.ReadLine());
+                fP.FillVect(N, num, B);
+                Console.Write("T1. Input num: ");
+                num = int.Parse(Console.ReadLine());
+                fP.FillVect(N, num, C);
+                Console.Write("T1. Input num: ");
+                num = int.Parse(Console.ReadLine());
+                fP.FillVect(N, num, D);
+                Console.Write("T1. Input num: ");
+                num = int.Parse(Console.ReadLine());
+                fP.FillMatr(N, num, MA);
+                Console.Write("T1. Input num: ");
+                num = int.Parse(Console.ReadLine());
+                fP.FillMatr(N, num, MD);
             }
             else 
             {
-                Data.FillParam.FillFunc1(N, 1, A, B, C, D, MA, MD);
+                fP.FillVect(N, 1, E);
+                fP.FillVect(N, 1, A);
+                fP.FillVect(N, 1, B);
+                fP.FillVect(N, 1, C);
+                fP.FillVect(N, 1, D);
+                fP.FillMatr(N, 1, MA);
+                fP.FillMatr(N, 1, MD);
+                Console.WriteLine();
             }
+
+            Thread.Sleep(3000);
 
             // F1: E = A + B + C + D * (MA * MD)
             // множення матриць (MA * MD)
-            int[,] tempMatr =  Data.MathFucn.MulMatr(MA, MD);
+            int[,] tempMatr =  mF.MulMatr(MA, MD);
             // множення вектора на матрицю D * |(MA * MD)|
-            int[] tempVec1 = Data.MathFucn.MulVecMatr(D, tempMatr);
+            int[] tempVec1 = mF.MulVecMatr(D, tempMatr);
             // додавання векторів C + |D * (MA * MD)|
-            int[] tempVec2 = Data.MathFucn.AddVector(tempVec1, C);
+            int[] tempVec2 = mF.AddVector(tempVec1, C);
             // додавання векторів B + |C + D * (MA * MD)|
-            int[] tempVec3 = Data.MathFucn.AddVector(tempVec2, B);
+            int[] tempVec3 = mF.AddVector(tempVec2, B);
             // додавання векторів A + |B + C + D * (MA * MD)|
-            E = Data.MathFucn.AddVector(tempVec3, A);
+            E = mF.AddVector(tempVec3, A);
 
             // зупинка таймеру часу
             stopwatch.Stop();
@@ -55,11 +85,12 @@ namespace Task
             // якщо N менше рівне 4, виводимо результат обчислення
             if (N <= 4)
             {
-                Console.WriteLine($"Thread end: F1; N: {N}; Time: {stopwatch.ElapsedMilliseconds} ms; " + Data.PrintText.PrintVector("E", E));
+                Console.WriteLine($"T1 END; N: {N}; Time: {stopwatch.ElapsedMilliseconds} ms; Res:");
+                pT.PrintVector("E", E);
             }
             else
             {
-                Console.WriteLine($"Thread end: F1; N: {N}; Time: {stopwatch.ElapsedMilliseconds} ms");
+                Console.WriteLine($"T1 END; N: {N}; Time: {stopwatch.ElapsedMilliseconds} ms");
             }
         }
     }

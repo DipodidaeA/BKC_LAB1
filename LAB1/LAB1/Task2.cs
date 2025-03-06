@@ -1,19 +1,22 @@
-﻿using System;
+﻿using Data;
+using System;
 using System.Diagnostics;
 using System.Threading;
 
 namespace Task
 {
-    static class F2
+    static class T2
     {
         public static void Func2(int N)
         {
+            MathFucn mF = new MathFucn();
+            FillParam fP = new FillParam();
+            PrintText pT = new PrintText();
+
             // таймер часу
             Stopwatch stopwatch = new Stopwatch();
             // запуст таймера часу
             stopwatch.Start();
-
-            //Thread.Sleep(1000);
 
             // створення локальних змінних
             int[,] MG = new int[N, N];
@@ -22,25 +25,40 @@ namespace Task
             int[,] MK = new int[N, N];
 
             // якщо N менше рівне 4, вводимо з клавіатури
+            Console.Write("T2. Input num: ");
             if (N <= 4)
             {
-                Console.WriteLine("Func2. Input num for fill: ");
                 int num = int.Parse(Console.ReadLine());
 
-                Data.FillParam.FillFunc2(N, num, MF, MH, MK);
+                fP.FillMatr(N, num, MG);
+                Console.Write("T2. Input num: ");
+                num = int.Parse(Console.ReadLine());
+                fP.FillMatr(N, num, MF);
+                Console.Write("T2. Input num: ");
+                num = int.Parse(Console.ReadLine());
+                fP.FillMatr(N, num, MH);
+                Console.Write("T2. Input num: ");
+                num = int.Parse(Console.ReadLine());
+                fP.FillMatr(N, num, MK);
             }
             else
             {
-                Data.FillParam.FillFunc2(N, 2, MF, MH, MK);
+                fP.FillMatr(N, 2, MG);
+                fP.FillMatr(N, 2, MF);
+                fP.FillMatr(N, 2, MH);
+                fP.FillMatr(N, 2, MK);
+                Console.WriteLine();
             }
+
+            Thread.Sleep(3000);
 
             // F2: MG = SORT(MF - MH * MK)
             // множення матриць MH * MK
-            int[,] tempMatr1 = Data.MathFucn.MulMatr(MH, MK);
+            int[,] tempMatr1 = mF.MulMatr(MH, MK);
             // віднімання матриць MF - |MH * MK|
-            int[,] tempMatr2 = Data.MathFucn.SubMatr(MF, tempMatr1);
+            int[,] tempMatr2 = mF.SubMatr(MF, tempMatr1);
             // розтування матриці по рядках SORT(|MF - MH * MK|)
-            MG = Data.MathFucn.SortLineMatr(tempMatr2);
+            MG = mF.SortLineMatr(tempMatr2);
 
             // зупинка таймеру часу
             stopwatch.Stop();
@@ -48,11 +66,12 @@ namespace Task
             // якщо N менше рівне 4, виводимо результат обчислення
             if (N <= 4)
             {
-                Console.WriteLine($"Thread end: F2; N: {N}; Time: {stopwatch.ElapsedMilliseconds} ms; " + Data.PrintText.PrintMATR("MG", MG));
+                Console.WriteLine($"T2 END; N: {N}; Time: {stopwatch.ElapsedMilliseconds} ms; Res:");
+                pT.PrintMATR("MG", MG);
             }
             else
             {
-                Console.WriteLine($"Thread end: F2; N: {N}; Time: {stopwatch.ElapsedMilliseconds} ms");
+                Console.WriteLine($"T2 END; N: {N}; Time: {stopwatch.ElapsedMilliseconds} ms");
             }
         }
     }

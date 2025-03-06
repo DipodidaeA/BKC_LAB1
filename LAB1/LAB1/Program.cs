@@ -30,19 +30,19 @@ namespace LAB1
             stopwatch.Start();
 
             // Створення задач з ім'ям, приорітетом, номером ядра та функцією
-            Thread thread1 = CreateTask("F1", ThreadPriority.Highest, () => Task.F1.Func1(N));
-            Thread thread2 = CreateTask("F2", ThreadPriority.Lowest, () => Task.F2.Func2(N));
-            Thread thread3 = CreateTask("F3", ThreadPriority.Normal, () => Task.F3.Func3(N));
+            Thread T1 = CreateTask("T1", ThreadPriority.Highest, () => Task.T1.Func1(N));
+            Thread T2 = CreateTask("T2", ThreadPriority.Lowest, () => Task.T2.Func2(N));
+            Thread T3 = CreateTask("T3", ThreadPriority.Normal, () => Task.T3.Func3(N));
 
             // щоб програма не завершувалася поки потоки не виконаються
-            thread1.Join();
-            thread2.Join();
-            thread3.Join();
+            T1.Join();
+            T2.Join();
+            T3.Join();
 
             // зупинка таймеру часу
             stopwatch.Stop();
             // вивід всього часу програми
-            Console.WriteLine($"Full Time: {stopwatch.ElapsedMilliseconds} ms");
+            Console.WriteLine($"Program END; Time: {stopwatch.ElapsedMilliseconds} ms");
         }
 
         // Створення задая
@@ -60,7 +60,7 @@ namespace LAB1
 
             // запуску потоку
             thread.Start();
-            Console.WriteLine($"Thread start: {thread.Name}; Priority: {thread.Priority}");
+            Console.WriteLine($"{thread.Name} START; Priority: {thread.Priority}");
 
             return thread;
         }
