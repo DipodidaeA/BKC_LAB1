@@ -15,8 +15,6 @@ namespace Task
 
             // таймер часу
             Stopwatch stopwatch = new Stopwatch();
-            // запуст таймера часу
-            stopwatch.Start();
 
             // створення локальних змінних
             int[] S = new int[N];
@@ -60,7 +58,10 @@ namespace Task
                 Console.WriteLine();
             }
 
-            Thread.Sleep(3000);
+            //Thread.Sleep(3000);
+
+            // запуст таймера часу
+            stopwatch.Start();
 
             // F3: S = (O + P + V) * (MR * MS)
             // додавання векторів O + P
@@ -83,7 +84,8 @@ namespace Task
             }
             else
             {
-                Console.WriteLine($"T3 END; N: {N}; Time: {stopwatch.ElapsedMilliseconds} ms");
+                Console.WriteLine($"T3 END; N: {N}; Time: {stopwatch.ElapsedMilliseconds} ms; Res:");
+                Console.WriteLine($"S[0]: {S[0]}");
             }
         }
     }

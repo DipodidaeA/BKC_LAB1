@@ -15,8 +15,6 @@ namespace Task
 
             // таймер часу
             Stopwatch stopwatch = new Stopwatch();
-            // запуст таймера часу
-            stopwatch.Start();
 
             // створення локальних змінних
             int[] E = new int[N];
@@ -65,7 +63,10 @@ namespace Task
                 Console.WriteLine();
             }
 
-            Thread.Sleep(3000);
+            //Thread.Sleep(3000);
+
+            // запуст таймера часу
+            stopwatch.Start();
 
             // F1: E = A + B + C + D * (MA * MD)
             // множення матриць (MA * MD)
@@ -90,7 +91,8 @@ namespace Task
             }
             else
             {
-                Console.WriteLine($"T1 END; N: {N}; Time: {stopwatch.ElapsedMilliseconds} ms");
+                Console.WriteLine($"T1 END; N: {N}; Time: {stopwatch.ElapsedMilliseconds} ms; Res:");
+                Console.WriteLine($"E[0]: {E[0]}");
             }
         }
     }
